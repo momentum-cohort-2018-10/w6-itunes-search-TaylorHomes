@@ -1,51 +1,32 @@
+/* globals $, jQuery */
+
 const searchButton = document.getElementById('search-button')
 const searchField = document.getElementById('search-field')
 
 
-searchButton.addEventListener('click', function (event) {
-    $.ajax({
-        url: 'https://itunes-api-proxy.glitch.me/search?term=',
-        data: {
-            term: searchField.value
-        },
-        dataType: "json",
-        success: function (entity) {
-            console.log(entity)
-            let resultsDiv = document.getElementById('search-results')
-            let countP = document.createElement('p')
-            countP.innerText = `Total count: ${entity.resultCount}`
-            resultsDiv.appendChild(countP)
+$('#search-button').on('click', function (entity) {
+    let query = $('#search-field').val()
 
 
-            for (let track of entity.results) {
-                let trackP = document.createElement('p')
-                let trackLink = document.createElement('a')
-                trackLink.href = track.trackViewUrl
-                trackLink.innerText = track.trackName
-                trackP.appendChild(trackLink)
-                resultsDiv.appendChild(trackP)
+    $.get('https://itunes.apple.com/search?term', { term: query }, function (entity) {
+        console.log(entity)
+        let $resultsDiv = $('#search-results')
+        $resultsDiv
+            .empty()
+            .append($('<p>')
+                .text(`Total count: ${entity.resultCount}`)
+            )
 
-            }
+        for (let track of entity.results) {
+            $resultsDiv.append($('<p>').html(trackHtml(track)))
         }
-
-    });
+    }, 'json')
 })
 
-
-
-
-
-
-
-
-// not functional yet
-// function enterKey() {
-//     searchField.addEventListener("keydown", function (event) {
-//         if (event.code === "Enter") {
-//             searchEvent(event)
-//         }
-//     })
-// }
-
-
+function trackHtml(track) {
+    return `
+        <a href="${track.trackViewUrl}">${track.trackName}</a> - Album: ${track.collectionName} 
+        <img src="${track.artworkUrl100}">
+    `
+}
 

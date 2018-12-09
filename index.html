@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>iTunes Jumpoff</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
     <script src="jquery-3.3.1.min.js" defer></script>
     <script src="main.js" defer></script>
 
@@ -14,12 +15,16 @@
 </head>
 
 <body>
-    <h1> Here, there be music! </h1>
-    <div>
-        <button id="search-button" class="btn">Search</button>
-        <input type="text" id="search-field" placeholder="Search for sweet jams...">
+    <div class="intro">
+        <h1></h1> CHAMPIONSHIP MUSIC </h1>
+    </div>
+    <div style="text-align:center;">
+
+        <button class="button" id="search-button" class="btn">Search</button>
+        <input class="jams" type="text" id="search-field" placeholder="               Search for sweet jams...">
 
     </div>
+
     <div id="search-results"></div>
 </body>
 
