@@ -2,10 +2,12 @@
 
 const searchButton = document.getElementById('search-button')
 const searchField = document.getElementById('search-field')
+const audioPlayer = $('#musicbox')
 
 
 $('#search-button').on('click', function (entity) {
     let query = $('#search-field').val()
+
 
 
     $.get('https://itunes.apple.com/search?term', { term: query }, function (entity) {
@@ -18,15 +20,30 @@ $('#search-button').on('click', function (entity) {
             )
 
         for (let track of entity.results) {
-            $resultsDiv.append($('<p>').html(trackHtml(track)))
+            $resultsDiv.append($('<div>').html(trackHtml(track)))
         }
     }, 'json')
+
+
+
 })
 
 function trackHtml(track) {
     return `
-        <a href="${track.trackViewUrl}">${track.trackName}</a> - Album: ${track.collectionName} 
-        <img src="${track.artworkUrl100}">
+
+    <div style="text-align:center;">
+        <h2><a href="${track.trackViewUrl}">${track.trackName} </h2>
+        <h3> Album: ${track.collectionName} </h3>
+        <img src="${track.artworkUrl100.replace(/100x100bb.jpg/, "/200x200bb.jpg")}">
+        <audio data-url="${track.trackViewUrl}" controls="" src"${track.previewURL}"></audio>
+        </a>
+    </div>
     `
 }
+
+
+
+
+
+
 
